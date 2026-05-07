@@ -12,6 +12,8 @@ interface ServerCardProps {
   game: string
   type: "main" | "fy" | "zombie" | "l4d2"
   isPrimary?: boolean
+  gameTrackerUrl?: string
+  gameTrackerImage?: string
 }
 
 const gameIcons = {
@@ -28,7 +30,7 @@ const gameColors = {
   l4d2: "bg-red-600 text-white",
 }
 
-export function ServerCard({ name, ip, game, type, isPrimary = false }: ServerCardProps) {
+export function ServerCard({ name, ip, game, type, isPrimary = false, gameTrackerUrl, gameTrackerImage }: ServerCardProps) {
   const [copied, setCopied] = useState(false)
   const Icon = gameIcons[type]
 
@@ -79,6 +81,14 @@ export function ServerCard({ name, ip, game, type, isPrimary = false }: ServerCa
         <p className="text-xs text-muted-foreground mt-2">
           Clique no botão para copiar o IP
         </p>
+        
+        {gameTrackerUrl && gameTrackerImage && (
+          <div className="mt-4 flex justify-center">
+            <a href={gameTrackerUrl} target="_blank" rel="noopener noreferrer">
+              <img src={gameTrackerImage} alt={`${name} GameTracker`} />
+            </a>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
