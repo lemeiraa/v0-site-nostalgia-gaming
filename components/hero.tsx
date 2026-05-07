@@ -1,25 +1,83 @@
+"use client"
+
 import Image from "next/image"
+import { useEffect, useRef } from "react"
+
+declare global {
+  interface Window {
+    YT: any
+    onYouTubeIframeAPIReady: () => void
+  }
+}
 
 export function Hero() {
+  const playerRef = useRef<any>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Load YouTube IFrame API
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/iframe_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag)
+
+    window.onYouTubeIframeAPIReady = () => {
+      playerRef.current = new window.YT.Player('youtube-player', {
+        videoId: 'RP1KcZhLPUw',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          loop: 1,
+          controls: 0,
+          modestbranding: 1,
+          playlist: 'RP1KcZhLPUw',
+          playsinline: 1,
+          rel: 0,
+          showinfo: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+        },
+        events: {
+          onReady: (event: any) => {
+            event.target.mute()
+            event.target.playVideo()
+          },
+          onStateChange: (event: any) => {
+            // If video ends or pauses, restart it
+            if (event.data === window.YT.PlayerState.ENDED || event.data === window.YT.PlayerState.PAUSED) {
+              event.target.playVideo()
+            }
+          }
+        }
+      })
+    }
+
+    // If API is already loaded
+    if (window.YT && window.YT.Player) {
+      window.onYouTubeIframeAPIReady()
+    }
+
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.destroy()
+      }
+    }
+  }, [])
+
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
       {/* Background video from YouTube */}
-      <div className="absolute inset-0 overflow-hidden">
-        <iframe
-          className="absolute inset-0 w-full h-full"
-          src="https://www.youtube.com/embed/RP1KcZhLPUw?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&playlist=RP1KcZhLPUw"
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
+      <div className="absolute inset-0 overflow-hidden" ref={containerRef}>
+        <div
+          id="youtube-player"
+          className="absolute"
           style={{
             pointerEvents: 'none',
-            border: 'none',
-            width: '120%',
-            height: '120%',
-            left: '-10%',
-            top: '-10%',
-            position: 'absolute',
-            objectFit: 'cover'
+            width: '300%',
+            height: '300%',
+            left: '-100%',
+            top: '-100%',
           }}
         />
       </div>
