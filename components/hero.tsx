@@ -3,18 +3,20 @@ import Image from "next/image"
 export function Hero() {
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-      {/* Background video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="https://youtu.be/RP1KcZhLPUw" type="video/mp4" />
-      </video>
+      {/* Background video from YouTube */}
+      <iframe
+        className="absolute inset-0 w-full h-full"
+        src="https://www.youtube.com/embed/RP1KcZhLPUw?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&playlist=RP1KcZhLPUw"
+        frameBorder="0"
+        allow="autoplay; fullscreen"
+        allowFullScreen
+        style={{
+          pointerEvents: 'none',
+          border: 'none'
+        }}
+      />
 
-      {/* Background effect */}
+      {/* Background effect overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
       
       {/* Grid pattern */}
