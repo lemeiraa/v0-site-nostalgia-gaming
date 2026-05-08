@@ -96,23 +96,19 @@ export function ShopSection() {
   const [ammopacksQty, setAmmopacksQty] = useState(1000)
 
   const handleBuy = (rankName: string, contact: { name: string; phone: string }) => {
-    console.log("[v0] handleBuy called:", { rankName, contact, selectedServer })
     const serverLabel = servers.find((s) => s.value === selectedServer)?.label || "Não selecionado"
     const url = `https://wa.me/${contact.phone}?text=${encodeURIComponent(
       `Olá! Tenho interesse em comprar o cargo *${rankName}* para o servidor *${serverLabel}* no CS Nostalgia.`
     )}`
-    console.log("[v0] Opening URL:", url)
     window.open(url, "_blank")
   }
 
   const handleBuyAmmopacks = (contact: { name: string; phone: string }) => {
-    console.log("[v0] handleBuyAmmopacks called:", { contact, selectedServer, ammopacksQty })
     const serverLabel = servers.find((s) => s.value === selectedServer)?.label || "Não selecionado"
     const price = (ammopacksQty / 1000) * 10
     const url = `https://wa.me/${contact.phone}?text=${encodeURIComponent(
       `Olá! Tenho interesse em comprar *${ammopacksQty.toLocaleString('pt-BR')} Ammo Packs* por *R$ ${price.toFixed(2).replace('.', ',')}* para o servidor *${serverLabel}* no CS Nostalgia.`
     )}`
-    console.log("[v0] Opening URL:", url)
     window.open(url, "_blank")
   }
 
