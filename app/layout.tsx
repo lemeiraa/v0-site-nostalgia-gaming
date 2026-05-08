@@ -7,8 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Nostalgia Gaming | Servidores CS 1.6 & L4D2',
-  description: 'Comunidade de jogos clássicos com servidores dedicados de Counter Strike 1.6 e Left 4 Dead 2. Entre na partida e reviva a nostalgia!',
+  title: 'CS Nostalgia - Clan de Counter-Strike 1.6',
+  description: 'Comunidade brasileira de Counter-Strike 1.6 com servidores 4Fun, Fypoolday e Zombie Plague. Junte-se a nós!',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR" className="bg-background">
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
